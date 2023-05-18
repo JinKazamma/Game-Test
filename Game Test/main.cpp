@@ -30,10 +30,15 @@ public:
 	}
 	void moveleft()
 	{
-		if (col - 1 >= 0 && (board[row][col - 1]=false))
+		if (col - 1 >= 0 && !(board[row][col - 1]))
 		{
 			board[row][col - 1] = true;
 			board[row][col] = false;
+			col -= 1;
+		}
+		else
+		{
+			cout << "Ход не возможен";
 		}
 	}
 	void moveright();
