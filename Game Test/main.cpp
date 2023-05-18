@@ -18,14 +18,11 @@ private:
 	int col = 0;
 	string colorOfFigure;
 public:
-	void setPosition(int str, int stl)
+	void setPositionColor(int str, int stl, string color)
 	{
 		row = str;
 		col = stl;
 		board[row][col] = true;
-	}
-	void SetColor(string color)
-	{
 		colorOfFigure = color;
 	}
 	void getposition()
@@ -86,13 +83,47 @@ public:
 	}
 
 };
-void SetFigurs(vector<Figure*>fig)
+void SetFigurs(vector<Figure*>&figW, vector<Figure*>& figB)
 {
-	for (int i = 0; i <= 9; i++)
+	int countFor4_6Whitefigure = 0;
+	int countFor7_9Whitefigure = 0;
+	for (int i = 0; i < 9; i++)
+	{
+		figW.push_back(new Figure);
+		if (i < 3)
 		{
-		fig.push_back(new Figure);
-		fig[i]->SetColor("white");
-		}	
+			figW.back()->setPositionColor(0, i, "white");
+		}
+		if(i>2 && i<6)
+		{
+			
+			figW.back()->setPositionColor(1, countFor4_6Whitefigure++, "white");
+		}
+		if(i>5 && i<9)
+		{
+			figW.back()->setPositionColor(2, countFor7_9Whitefigure++, "white");
+		}
+	}
+	int countFor1_3blackfigure = 0;
+	int countFor4_6blackfigure = 0;
+	int countFor7_9blackfigure = 0;
+	for (int i = 0; i < 9; i++)
+	{
+		figB.push_back(new Figure);
+		if (i < 3)
+		{
+			figB.back()->setPositionColor(5, countFor1_3blackfigure++, "white");
+		}
+		if (i > 2 && i < 6)
+		{
+
+			figB.back()->setPositionColor(1, countFor4_6blackfigure++, "white");
+		}
+		if (i > 5 && i < 9)
+		{
+			figB.back()->setPositionColor(2, countFor4_6blackfigure++, "white");
+		}
+	}
 }
 
 int main()
@@ -100,9 +131,12 @@ int main()
 	setlocale(LC_ALL, "ru");
 
 	vector <Figure*> fw;
-	vector <Figure*> fb;
-
+	//vector <Figure*> fb;
+	//fw.push_back(new Figure);
 	SetFigurs(fw);
-	fw[4]->getposition();
+	for (int i = 0; i< fw.size() ; i++)
+	{
+		fw[i]->getposition();
+	}
 	return 0;
 }
