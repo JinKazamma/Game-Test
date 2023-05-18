@@ -24,8 +24,18 @@ public:
 		col = stl;
 		board[row][col] = true;
 	}
-	
-	void moveleft();
+	void SetColor(string color)
+	{
+		colorOfFigure = color;
+	}
+	void moveleft()
+	{
+		if (col - 1 >= 0 && (board[row][col - 1]=false))
+		{
+			board[row][col - 1] = true;
+			board[row][col] = false;
+		}
+	}
 	void moveright();
 	void moveup();
 	void movedown();
@@ -35,6 +45,6 @@ int main()
 {
 
 	Figure f1;
-
+	f1.setPosition(1, 1);
 	return 0;
 }
