@@ -104,9 +104,9 @@ void SetFigurs(vector<Figure*>&figW, vector<Figure*>& figB)
 			figW.back()->setPositionColor(2, countFor7_9Whitefigure++, "white");
 		}
 	}
-	int countFor1_3blackfigure = 0;
-	int countFor4_6blackfigure = 0;
-	int countFor7_9blackfigure = 0;
+	int countFor1_3blackfigure = 5;
+	int countFor4_6blackfigure = 5;
+	int countFor7_9blackfigure = 5;
 	for (int i = 0; i < 9; i++)
 	{
 		figB.push_back(new Figure);
@@ -117,11 +117,11 @@ void SetFigurs(vector<Figure*>&figW, vector<Figure*>& figB)
 		if (i > 2 && i < 6)
 		{
 
-			figB.back()->setPositionColor(1, countFor4_6blackfigure++, "white");
+			figB.back()->setPositionColor(6, countFor4_6blackfigure++, "white");
 		}
 		if (i > 5 && i < 9)
 		{
-			figB.back()->setPositionColor(2, countFor4_6blackfigure++, "white");
+			figB.back()->setPositionColor(7, countFor4_6blackfigure++, "white");
 		}
 	}
 }
