@@ -61,7 +61,7 @@ public:
 		{
 			board[row-1][col] = true;
 			board[row][col] = false;
-			col--;
+			row--;
 		}
 		else
 		{
@@ -74,7 +74,7 @@ public:
 		{
 			board[row + 1][col] = true;
 			board[row][col] = false;
-			col++;
+			row++;
 		}
 		else
 		{
@@ -83,60 +83,48 @@ public:
 	}
 
 };
-void SetFigurs(vector<Figure*>&figW, vector<Figure*>& figB)
+void SetFigurs(vector<Figure*>&figW, vector<Figure*>&figB)
 {
 	int countFor4_6Whitefigure = 0;
 	int countFor7_9Whitefigure = 0;
-	for (int i = 0; i < 9; i++)
-	{
-		figW.push_back(new Figure);
-		if (i < 3)
-		{
-			figW.back()->setPositionColor(0, i, "white");
-		}
-		if(i>2 && i<6)
-		{
-			
-			figW.back()->setPositionColor(1, countFor4_6Whitefigure++, "white");
-		}
-		if(i>5 && i<9)
-		{
-			figW.back()->setPositionColor(2, countFor7_9Whitefigure++, "white");
-		}
-	}
 	int countFor1_3blackfigure = 5;
 	int countFor4_6blackfigure = 5;
 	int countFor7_9blackfigure = 5;
 	for (int i = 0; i < 9; i++)
 	{
+		figW.push_back(new Figure);
 		figB.push_back(new Figure);
 		if (i < 3)
 		{
-			figB.back()->setPositionColor(5, countFor1_3blackfigure++, "white");
+			figW.back()->setPositionColor(0, i, "white");
+			figB.back()->setPositionColor(5, countFor1_3blackfigure++, "Black");
 		}
-		if (i > 2 && i < 6)
+		if(i>2 && i<6)
 		{
-
-			figB.back()->setPositionColor(6, countFor4_6blackfigure++, "white");
+			
+			figW.back()->setPositionColor(1, countFor4_6Whitefigure++, "white");
+			figB.back()->setPositionColor(6, countFor4_6blackfigure++, "Black");
 		}
-		if (i > 5 && i < 9)
+		if(i>5 && i<9)
 		{
-			figB.back()->setPositionColor(7, countFor4_6blackfigure++, "white");
+			figW.back()->setPositionColor(2, countFor7_9Whitefigure++, "white");
+			figB.back()->setPositionColor(7, countFor7_9blackfigure++, "Black");
 		}
 	}
+	
 }
 
 int main()
 {
 	setlocale(LC_ALL, "ru");
 
-	vector <Figure*> fw;
-	//vector <Figure*> fb;
-	//fw.push_back(new Figure);
-	SetFigurs(fw);
-	for (int i = 0; i< fw.size() ; i++)
+	vector <Figure*> WhiteFigure;
+	vector <Figure*> BlackFigure;
+	SetFigurs(WhiteFigure,BlackFigure);
+	for (int i = 0; i< WhiteFigure.size() ; i++)
 	{
-		fw[i]->getposition();
+		WhiteFigure[i]->getposition();
+		BlackFigure[i]->getposition();
 	}
 	return 0;
 }
