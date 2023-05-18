@@ -1,22 +1,40 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <array>
 
 using namespace std;
 
-class Doska
+
+const int ROWS = 8;
+const int COLS = 8;
+
+array<array<bool, COLS>, ROWS> board = {};
+
+class Figure 
 {
 private:
-	int stroka[8] = { 1,2,3,4,5,6,7,8 };
-	int stolbec[8] = { 1,2,3,4,5,6,7,8 };
+	int row = 0;
+	int col = 0;
+	string colorOfFigure;
 public:
-	virtual void moveleft() = 0;
-	virtual void moveright() = 0;
-	virtual void moveup() = 0;
-	virtual void movedown() = 0;
-};
-class figure
-{
-private:
+	void setPosition(int str, int stl)
+	{
+		row = str;
+		col = stl;
+		board[row][col] = true;
+	}
 	
+	void moveleft();
+	void moveright();
+	void moveup();
+	void movedown();
 };
+
+int main()
+{
+
+	Figure f1;
+
+	return 0;
+}
