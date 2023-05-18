@@ -87,7 +87,7 @@ public:
 	}
 
 };
-void SetFigurs(vector<Figure*>&figW, vector<Figure*>&figB)
+void SetFigurs(vector<Figure*>& figB, vector<Figure*>& figW )
 {
 	int countFor4_6Whitefigure = 0;
 	int countFor7_9Whitefigure = 0;
@@ -96,53 +96,46 @@ void SetFigurs(vector<Figure*>&figW, vector<Figure*>&figB)
 	int countFor7_9blackfigure = 5;
 	for (int i = 0; i < 9; i++)
 	{
-		figW.push_back(new Figure);
 		figB.push_back(new Figure);
+		figW.push_back(new Figure);
 		if (i < 3)
 		{
-			figW.back()->setPositionColor(0, i, "white");
-			figB.back()->setPositionColor(5, countFor1_3blackfigure++, "Black");
+			figB.back()->setPositionColor(0, i, "Black");
+			figW.back()->setPositionColor(5, countFor1_3blackfigure++,  "white");
 		}
 		if(i>2 && i<6)
 		{
 			
-			figW.back()->setPositionColor(1, countFor4_6Whitefigure++, "white");
-			figB.back()->setPositionColor(6, countFor4_6blackfigure++, "Black");
+			figB.back()->setPositionColor(1, countFor4_6Whitefigure++,"Black");
+			figW.back()->setPositionColor(6, countFor4_6blackfigure++,"white");
 		}
 		if(i>5 && i<9)
 		{
-			figW.back()->setPositionColor(2, countFor7_9Whitefigure++, "white");
-			figB.back()->setPositionColor(7, countFor7_9blackfigure++, "Black");
+			figB.back()->setPositionColor(2, countFor7_9Whitefigure++, "Black");
+			figW.back()->setPositionColor(7, countFor7_9blackfigure++, "white");
 		}
 	}
 	
 }
 void MoveAi(vector <Figure*> BlackFigure)
 {
-	int index = rand() % BlackFigure.size();
-	auto fig = BlackFigure[index];
-	auto [row, col] = fig->GetPosition();
-	// Случайное направление для хода
-	bool down = rand() % 2;
-	bool right = !down;
-	if (down)
+	bool step = false;
+	//рандомный выбор фигуры
+	while (!step) 
 	{
-		// Ход вниз
+		int index = rand() % BlackFigure.size();
+		auto [row, col] = BlackFigure[index]->GetPosition();
+		//Движ вниз
 		if (row + 1 <= 7 && !(board[row + 1][col]))
 		{
-			board[row + 1][col] = true;
-			board[row][col] = false;
-			fig->movedown();
+			BlackFigure[index]->movedown();
+			step = true;
 		}
-	}
-	else
-	{
-		// Ход вправо
-		if (col + 1 <= 7 && !(board[row][col + 1]))
+		//Движ вправо
+		if (col + 1 <= 7 && !(board[row][col + 1])&&(!step))
 		{
-			board[row][col + 1] = true;
-			board[row][col] = false;
-			fig->moveright();
+			BlackFigure[index]->moveright();
+			step = true;
 		}
 	}
 }
@@ -152,13 +145,13 @@ int main()
 	setlocale(LC_ALL, "ru");
 	int choiseFigure;
 	string choiseSide;
-	vector <Figure*> WhiteFigure;
 	vector <Figure*> BlackFigure;
+	vector <Figure*> WhiteFigure;
 	SetFigurs(BlackFigure, WhiteFigure);
 	bool gameover = false;
 	while (!gameover)
-	{ 
-		int Counter;
+	{
+		int Counter=0;
 		cout << "выберите белую фигуру"; cin >> choiseFigure;
 		cout << "выберите направление "; cin >> choiseSide;
 		if (choiseSide == "left")
@@ -171,21 +164,20 @@ int main()
 			WhiteFigure[choiseFigure]->movedown();
 		for (int i = 0; i < WhiteFigure.size(); i++)
 		{
-			/*pair<int,int>currentP1 = WhiteFigure[i]->GetPosition();
-			if()*/
-			
 			auto [row, col] = WhiteFigure[i]->GetPosition();
-			if (board[row][col])
-			Counter++;
+			if (row == 0 && col == 0 || row == 0 && col == 1 || row == 0 && col == 2 ||
+				row == 1 && col == 0 || row == 1 && col == 1 || row == 1 && col == 2 ||
+				row == 2 && col == 0 || row == 2 && col == 1 || row == 2 && col == 2)
+				Counter++;
 
-		if(Counter == WhiteFigure.size());
-		{cout << "Black figures are on white positions. You won!" << endl;
-		gameover = true;
-		break;
+			if (Counter == WhiteFigure.size())
+			{
+			cout << "Black figures are on white positions. You won!" << endl;
+			gameover = true;
+			break;
+			}
 		}
+		MoveAi(BlackFigure);
 	}
-		
-		MoveAi(BlackFigure)
-	
 	return 0;
 }
