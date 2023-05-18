@@ -25,9 +25,13 @@ public:
 		board[row][col] = true;
 		colorOfFigure = color;
 	}
-	void getposition()
+	pair<int, int> GetPosition() const
 	{
-		cout << row<<"\t" << col << endl;
+		return make_pair(row, col);
+	}
+	void SHOWtposition()
+	{
+		cout << row<<"\t" << col <<"\t"<< colorOfFigure << endl;
 	}
 	void moveleft()
 	{
@@ -113,18 +117,75 @@ void SetFigurs(vector<Figure*>&figW, vector<Figure*>&figB)
 	}
 	
 }
+void MoveAi(vector <Figure*> BlackFigure)
+{
+	int index = rand() % BlackFigure.size();
+	auto fig = BlackFigure[index];
+	auto [row, col] = fig->GetPosition();
+	// Случайное направление для хода
+	bool down = rand() % 2;
+	bool right = !down;
+	if (down)
+	{
+		// Ход вниз
+		if (row + 1 <= 7 && !(board[row + 1][col]))
+		{
+			board[row + 1][col] = true;
+			board[row][col] = false;
+			fig->movedown();
+		}
+	}
+	else
+	{
+		// Ход вправо
+		if (col + 1 <= 7 && !(board[row][col + 1]))
+		{
+			board[row][col + 1] = true;
+			board[row][col] = false;
+			fig->moveright();
+		}
+	}
+}
 
 int main()
 {
 	setlocale(LC_ALL, "ru");
-
+	int choiseFigure;
+	string choiseSide;
 	vector <Figure*> WhiteFigure;
 	vector <Figure*> BlackFigure;
-	SetFigurs(WhiteFigure,BlackFigure);
-	for (int i = 0; i< WhiteFigure.size() ; i++)
-	{
-		WhiteFigure[i]->getposition();
-		BlackFigure[i]->getposition();
+	SetFigurs(BlackFigure, WhiteFigure);
+	bool gameover = false;
+	while (!gameover)
+	{ 
+		int Counter;
+		cout << "выберите белую фигуру"; cin >> choiseFigure;
+		cout << "выберите направление "; cin >> choiseSide;
+		if (choiseSide == "left")
+			WhiteFigure[choiseFigure]->moveleft();
+		if (choiseSide == "right")
+			WhiteFigure[choiseFigure]->moveright();
+		if (choiseSide == "up")
+			WhiteFigure[choiseFigure]->moveup();
+		if (choiseSide == "down")
+			WhiteFigure[choiseFigure]->movedown();
+		for (int i = 0; i < WhiteFigure.size(); i++)
+		{
+			/*pair<int,int>currentP1 = WhiteFigure[i]->GetPosition();
+			if()*/
+			
+			auto [row, col] = WhiteFigure[i]->GetPosition();
+			if (board[row][col])
+			Counter++;
+
+		if(Counter == WhiteFigure.size());
+		{cout << "Black figures are on white positions. You won!" << endl;
+		gameover = true;
+		break;
+		}
 	}
+		
+		MoveAi(BlackFigure)
+	
 	return 0;
 }
