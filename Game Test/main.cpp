@@ -28,28 +28,81 @@ public:
 	{
 		colorOfFigure = color;
 	}
+	void getposition()
+	{
+		cout << row<<"\t" << col << endl;
+	}
 	void moveleft()
 	{
 		if (col - 1 >= 0 && !(board[row][col - 1]))
 		{
 			board[row][col - 1] = true;
 			board[row][col] = false;
-			col -= 1;
+			col--;
 		}
 		else
 		{
-			cout << "Ход не возможен";
+			cout << "Ход не возможен" << endl;
 		}
 	}
-	void moveright();
-	void moveup();
-	void movedown();
+	void moveright()
+	{
+		if (col + 1 <= 7 && !(board[row][col + 1]))
+		{
+			board[row][col + 1] = true;
+			board[row][col] = false;
+			col++;
+		}
+		else
+		{
+			cout << "Ход не возможен" << endl;
+		}
+	}
+	void moveup()
+	{
+		if (row - 1 >=0  && !(board[row-1][col]))
+		{
+			board[row-1][col] = true;
+			board[row][col] = false;
+			col--;
+		}
+		else
+		{
+			cout << "Ход не возможен" << endl;
+		}
+	}
+	void movedown()
+	{
+		if (row + 1 <= 7 && !(board[row + 1][col]))
+		{
+			board[row + 1][col] = true;
+			board[row][col] = false;
+			col++;
+		}
+		else
+		{
+			cout << "Ход не возможен" << endl;
+		}
+	}
+
 };
+void SetFigurs(vector<Figure*>fig)
+{
+	for (int i = 0; i <= 9; i++)
+		{
+		fig.push_back(new Figure);
+		fig[i]->SetColor("white");
+		}	
+}
 
 int main()
 {
+	setlocale(LC_ALL, "ru");
 
-	Figure f1;
-	f1.setPosition(1, 1);
+	vector <Figure*> fw;
+	vector <Figure*> fb;
+
+	SetFigurs(fw);
+	fw[4]->getposition();
 	return 0;
 }
