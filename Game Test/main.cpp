@@ -16,22 +16,16 @@ class Figure
 private:
 	int row = 0;
 	int col = 0;
-	string colorOfFigure;
 public:
-	void setPositionColor(int str, int stl, string color)
+	void setPositionColor(int str, int stl)
 	{
 		row = str;
 		col = stl;
 		board[row][col] = true;
-		colorOfFigure = color;
 	}
 	pair<int, int> GetPosition() const
 	{
 		return make_pair(row, col);
-	}
-	void SHOWtposition()
-	{
-		cout << row<<"\t" << col <<"\t"<< colorOfFigure << endl;
 	}
 	void moveleft()
 	{
@@ -100,19 +94,19 @@ void SetFigurs(vector<Figure*>& figB, vector<Figure*>& figW )
 		figW.push_back(new Figure);
 		if (i < 3)
 		{
-			figB.back()->setPositionColor(0, i, "Black");
-			figW.back()->setPositionColor(5, countFor1_3blackfigure++,  "white");
+			figB.back()->setPositionColor(0, i);
+			figW.back()->setPositionColor(5, countFor1_3blackfigure++);
 		}
 		if(i>2 && i<6)
 		{
 			
-			figB.back()->setPositionColor(1, countFor4_6Whitefigure++,"Black");
-			figW.back()->setPositionColor(6, countFor4_6blackfigure++,"white");
+			figB.back()->setPositionColor(1, countFor4_6Whitefigure++);
+			figW.back()->setPositionColor(6, countFor4_6blackfigure++);
 		}
 		if(i>5 && i<9)
 		{
-			figB.back()->setPositionColor(2, countFor7_9Whitefigure++, "Black");
-			figW.back()->setPositionColor(7, countFor7_9blackfigure++, "white");
+			figB.back()->setPositionColor(2, countFor7_9Whitefigure++);
+			figW.back()->setPositionColor(7, countFor7_9blackfigure++);
 		}
 	}
 	
@@ -131,7 +125,7 @@ void MoveAi(vector <Figure*> BlackFigure)
 			BlackFigure[index]->movedown();
 			step = true;
 		}
-		//Движ вправо
+		//Движе вправо
 		if (col + 1 <= 7 && !(board[row][col + 1])&&(!step))
 		{
 			BlackFigure[index]->moveright();
@@ -139,7 +133,42 @@ void MoveAi(vector <Figure*> BlackFigure)
 		}
 	}
 }
-
+void Showboard(vector<Figure*>&WhiteFigure)
+{
+	int countB = 0;
+	int countW = 0;
+		for (int r = 0; r < ROWS; r++)
+	{
+		for (int c = 0; c < COLS; c++)
+		{
+			if (board[r][c])
+			{
+				bool white = false;
+				for (int j = 0; j < WhiteFigure.size(); j++)
+				{
+					auto [row, col] = WhiteFigure[j]->GetPosition();
+					if (row == r && col == c)
+					{
+						white = true;
+						cout << "W"<< countW<<" ";
+						countW++;
+						break;
+					}
+				}
+				if (!white)
+				{
+					cout << "B" << countB << " ";;
+					countB++;
+				}
+			}
+			else
+			{
+				cout << " O ";
+			}
+		}
+		cout << endl;
+	}
+}
 int main()
 {
 	setlocale(LC_ALL, "ru");
@@ -152,15 +181,16 @@ int main()
 	while (!gameover)
 	{
 		int Counter=0;
-		cout << "выберите белую фигуру"; cin >> choiseFigure;
-		cout << "выберите направление "; cin >> choiseSide;
-		if (choiseSide == "left")
+		Showboard(WhiteFigure);
+		cout << "выберите цифру белой фигуры  "; cin >> choiseFigure;
+		cout << "выберите направление: l/r/u/d "; cin >> choiseSide;
+		if (choiseSide == "l")
 			WhiteFigure[choiseFigure]->moveleft();
-		if (choiseSide == "right")
+		if (choiseSide == "r")
 			WhiteFigure[choiseFigure]->moveright();
-		if (choiseSide == "up")
+		if (choiseSide == "u")
 			WhiteFigure[choiseFigure]->moveup();
-		if (choiseSide == "down")
+		if (choiseSide == "d")
 			WhiteFigure[choiseFigure]->movedown();
 		for (int i = 0; i < WhiteFigure.size(); i++)
 		{
@@ -177,7 +207,10 @@ int main()
 			break;
 			}
 		}
+		Showboard(WhiteFigure);
+		cout << "========ХОД ИИ=========" << endl;
 		MoveAi(BlackFigure);
+		
 	}
 	return 0;
 }
