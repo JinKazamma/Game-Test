@@ -233,11 +233,6 @@ int main()
 					break;
 				}
 			}
-			if (!gameover) 
-			{
-			//	Showboard(WhiteFigure);
-				//cout << "========ÕÎÄ ÈÈ=========" << endl;
-			}
 			MoveAi(BlackFigure);			
 			for (int i = 0; i < BlackFigure.size(); i++)
 			{
