@@ -3,6 +3,7 @@
 #include <vector>
 #include <array>
 #include <conio.h>
+#include <cstdlib>
 
 using namespace std;
 
@@ -202,6 +203,7 @@ int main()
 		bool gameover = false;
 		while (!gameover)
 		{
+			system("cls");
 			int WhiteCounter = 0;
 			int blackCounter = 0;
 			Showboard(WhiteFigure);
@@ -233,8 +235,8 @@ int main()
 			}
 			if (!gameover) 
 			{
-				Showboard(WhiteFigure);
-				cout << "========ÕÎÄ ÈÈ=========" << endl;
+			//	Showboard(WhiteFigure);
+				//cout << "========ÕÎÄ ÈÈ=========" << endl;
 			}
 			MoveAi(BlackFigure);			
 			for (int i = 0; i < BlackFigure.size(); i++)
