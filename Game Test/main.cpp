@@ -123,13 +123,13 @@ void MoveAi(const vector <Figure*>&BlackFigure)
 void MovePlayer(const vector <Figure*> &WhiteFigure)
 {
 	char movefigure;
-	int choiseFigure = atoi(&movefigure);
 	char choiseSide;
 	bool step = false;
 	while (!step)
 	{	
 		cout << "выберите цифру белой фигуры  ";  movefigure = _getche(); cout << endl;
 		cout << "выберите направление: w/s/a/d "; choiseSide = _getche(); cout << endl;
+		int choiseFigure = atoi(&movefigure);
 		auto [row, col] = WhiteFigure[choiseFigure]->GetPosition();
 		if (choiseSide == 'a' && col - 1 >= 0 && !(board[row][col - 1]))
 		{
