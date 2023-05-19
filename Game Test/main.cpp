@@ -29,55 +29,27 @@ public:
 	}
 	void moveleft()
 	{
-		if (col - 1 >= 0 && !(board[row][col - 1]))
-		{
 			board[row][col - 1] = true;
 			board[row][col] = false;
 			col--;
-		}
-		else
-		{
-			cout << "Ход не возможен" << endl;
-		}
 	}
 	void moveright()
 	{
-		if (col + 1 <= 7 && !(board[row][col + 1]))
-		{
 			board[row][col + 1] = true;
 			board[row][col] = false;
 			col++;
-		}
-		else
-		{
-			cout << "Ход не возможен" << endl;
-		}
 	}
 	void moveup()
 	{
-		if (row - 1 >=0  && !(board[row-1][col]))
-		{
 			board[row-1][col] = true;
 			board[row][col] = false;
 			row--;
-		}
-		else
-		{
-			cout << "Ход не возможен" << endl;
-		}
 	}
 	void movedown()
 	{
-		if (row + 1 <= 7 && !(board[row + 1][col]))
-		{
 			board[row + 1][col] = true;
 			board[row][col] = false;
 			row++;
-		}
-		else
-		{
-			cout << "Ход не возможен" << endl;
-		}
 	}
 
 };
@@ -133,6 +105,46 @@ void MoveAi(vector <Figure*> BlackFigure)
 		}
 	}
 }
+void MovePlayer(vector <Figure*> WhiteFigure)
+{
+	int choiseFigure;
+	string choiseSide;
+	bool step = false;
+	while (!step)
+	{	
+		cout << "выберите цифру белой фигуры  "; cin >> choiseFigure;
+		cout << "выберите направление: l/r/u/d "; cin >> choiseSide;
+		auto [row, col] = WhiteFigure[choiseFigure]->GetPosition();
+		if (choiseSide == "l" && col - 1 >= 0 && !(board[row][col - 1]))
+		{
+				WhiteFigure[choiseFigure]->moveleft();
+				step = true;
+				break;
+		}
+		if (choiseSide == "r" && col + 1 <= 7 && !(board[row][col + 1]))
+		{
+			WhiteFigure[choiseFigure]->moveright();
+			step = true;
+			break;
+		}
+		if (choiseSide == "u"&& row - 1 >= 0 && !(board[row - 1][col]))
+		{
+			WhiteFigure[choiseFigure]->moveup();
+			step = true;
+			break;
+		}
+		if (choiseSide == "d"&& row + 1 <= 7 && !(board[row + 1][col]))
+		{
+			WhiteFigure[choiseFigure]->movedown();
+			step = true;
+			break;
+		}
+		else
+		{
+			cout << "Ход не возможен" << endl;
+		}
+	}
+}
 void Showboard(vector<Figure*>&WhiteFigure)
 {
 	int countB = 0;
@@ -150,20 +162,20 @@ void Showboard(vector<Figure*>&WhiteFigure)
 					if (row == r && col == c)
 					{
 						white = true;
-						cout << "W"<< countW<<" ";
+						cout << "["<< countW<<"]";
 						countW++;
 						break;
 					}
 				}
 				if (!white)
 				{
-					cout << "B" << countB << " ";;
+					cout << "[B" << "]";;
 					countB++;
 				}
 			}
 			else
 			{
-				cout << " O ";
+				cout << "[ ]";
 			}
 		}
 		cout << endl;
@@ -172,37 +184,28 @@ void Showboard(vector<Figure*>&WhiteFigure)
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	int choiseFigure;
-	string choiseSide;
+	
 	vector <Figure*> BlackFigure;
 	vector <Figure*> WhiteFigure;
 	SetFigurs(BlackFigure, WhiteFigure);
 	bool gameover = false;
 	while (!gameover)
 	{
-		int Counter=0;
+		int WhiteCounter=0;
+		int blackCounter = 0;
 		Showboard(WhiteFigure);
-		cout << "выберите цифру белой фигуры  "; cin >> choiseFigure;
-		cout << "выберите направление: l/r/u/d "; cin >> choiseSide;
-		if (choiseSide == "l")
-			WhiteFigure[choiseFigure]->moveleft();
-		if (choiseSide == "r")
-			WhiteFigure[choiseFigure]->moveright();
-		if (choiseSide == "u")
-			WhiteFigure[choiseFigure]->moveup();
-		if (choiseSide == "d")
-			WhiteFigure[choiseFigure]->movedown();
+		MovePlayer(WhiteFigure);
 		for (int i = 0; i < WhiteFigure.size(); i++)
 		{
 			auto [row, col] = WhiteFigure[i]->GetPosition();
 			if (row == 0 && col == 0 || row == 0 && col == 1 || row == 0 && col == 2 ||
 				row == 1 && col == 0 || row == 1 && col == 1 || row == 1 && col == 2 ||
 				row == 2 && col == 0 || row == 2 && col == 1 || row == 2 && col == 2)
-				Counter++;
+				WhiteCounter++;
 
-			if (Counter == WhiteFigure.size())
-			{
-			cout << "Black figures are on white positions. You won!" << endl;
+			if (WhiteCounter == WhiteFigure.size())
+			{	   
+			cout << "=====Вы Победили!======" << endl;
 			gameover = true;
 			break;
 			}
@@ -210,7 +213,22 @@ int main()
 		Showboard(WhiteFigure);
 		cout << "========ХОД ИИ=========" << endl;
 		MoveAi(BlackFigure);
-		
+		for (int i = 0; i < BlackFigure.size(); i++)
+		{
+			auto [row, col] = BlackFigure[i]->GetPosition();
+			if (row == 7 && col == 0 || row == 7 && col == 1 || row == 7 && col == 2
+				|| row == 6 && col == 0 || row == 6 && col == 1 || row == 6 && col == 2
+				|| row == 5 && col == 0 || row == 5 && col == 1 || row == 5 && col == 2)
+				blackCounter++;
+		}
+		if (blackCounter == BlackFigure.size())
+		{
+		cout << "======Вы проиграли=====" << endl;
+		gameover = true;
+			break;
+		}
 	}
+		
+	
 	return 0;
 }
