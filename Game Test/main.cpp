@@ -55,7 +55,7 @@ public:
 	}
 
 };
-void SetFigurs(vector<Figure*>& figB, vector<Figure*>& figW )
+void SetFigurs(const vector<Figure*>& figB, const vector<Figure*>& figW )
 {
 	int countFor4_6Whitefigure = 0;
 	int countFor7_9Whitefigure = 0;
@@ -85,7 +85,7 @@ void SetFigurs(vector<Figure*>& figB, vector<Figure*>& figW )
 	}
 	
 }
-void MoveAi(vector <Figure*> BlackFigure)
+void MoveAi(const vector <Figure*>&BlackFigure)
 {
 	bool step = false;
 	//рандомный выбор фигуры
@@ -105,6 +105,13 @@ void MoveAi(vector <Figure*> BlackFigure)
 			BlackFigure[index]->moveright();
 			step = true;
 		}
+		//Движе влево
+		if (col - 1 >= 0 && !(board[row][col - 1]) && (!step))
+		{
+			BlackFigure[index]->moveleft();
+			step = true;
+			break;
+		}
 		//движ вверх
 		if (row - 1 >= 0 && !(board[row - 1][col]) &&(!step))
 		{
@@ -113,7 +120,7 @@ void MoveAi(vector <Figure*> BlackFigure)
 		}
 	}
 }
-void MovePlayer(vector <Figure*> WhiteFigure)
+void MovePlayer(const vector <Figure*> &WhiteFigure)
 {
 	int choiseFigure;
 	char choiseSide;
@@ -155,7 +162,7 @@ void MovePlayer(vector <Figure*> WhiteFigure)
 		}
 	}
 }
-void Showboard(vector<Figure*>&WhiteFigure)
+void Showboard(const vector<Figure*>&WhiteFigure)
 {
 	int countB = 0;
 	int countW = 0;
@@ -218,6 +225,8 @@ int main()
 
 				if (WhiteCounter == WhiteFigure.size())
 				{
+					system("cls"); 
+					Showboard(WhiteFigure);
 					cout << "=========УРА!!!========" << endl;
 					cout << "=========УРА!!!========" << endl;
 					cout << "=========УРА!!!========" << endl;
