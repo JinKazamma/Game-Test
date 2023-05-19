@@ -55,7 +55,7 @@ public:
 	}
 
 };
-void SetFigurs(const vector<Figure*>& figB, const vector<Figure*>& figW )
+void SetFigurs(vector<Figure*>& figB, vector<Figure*>& figW )
 {
 	int countFor4_6Whitefigure = 0;
 	int countFor7_9Whitefigure = 0;
@@ -122,15 +122,14 @@ void MoveAi(const vector <Figure*>&BlackFigure)
 }
 void MovePlayer(const vector <Figure*> &WhiteFigure)
 {
-	int choiseFigure;
-	char choiseSide;
 	char movefigure;
+	int choiseFigure = atoi(&movefigure);
+	char choiseSide;
 	bool step = false;
 	while (!step)
 	{	
-		cout << "выберите цифру белой фигуры  ";  movefigure =_getche(); cout << endl;;
+		cout << "выберите цифру белой фигуры  ";  movefigure = _getche(); cout << endl;
 		cout << "выберите направление: w/s/a/d "; choiseSide = _getche(); cout << endl;
-		choiseFigure = atoi(&movefigure);
 		auto [row, col] = WhiteFigure[choiseFigure]->GetPosition();
 		if (choiseSide == 'a' && col - 1 >= 0 && !(board[row][col - 1]))
 		{
