@@ -127,8 +127,8 @@ void MovePlayer(const vector <Figure*> &WhiteFigure)
 	bool step = false;
 	while (!step)
 	{	
-		cout << "выберите цифру белой фигуры  ";  movefigure = _getche(); cout << endl;
-		cout << "выберите направление: w/s/a/d "; choiseSide = _getche(); cout << endl;
+		cout << "chose num of figure  ";  movefigure = _getche(); cout << endl;
+		cout << "chose side: w/s/a/d "; choiseSide = _getche(); cout << endl;
 		int choiseFigure = atoi(&movefigure);
 		auto [row, col] = WhiteFigure[choiseFigure]->GetPosition();
 		if (choiseSide == 'a' && col - 1 >= 0 && !(board[row][col - 1]))
@@ -157,7 +157,7 @@ void MovePlayer(const vector <Figure*> &WhiteFigure)
 		}
 		else
 		{
-			cout << "Ход не возможен" << endl;
+			cout << "no move possible" << endl;
 		}
 	}
 }
@@ -226,17 +226,17 @@ int main()
 				{
 					system("cls"); 
 					Showboard(WhiteFigure);
-					cout << "=========УРА!!!========" << endl;
-					cout << "=========УРА!!!========" << endl;
-					cout << "=========УРА!!!========" << endl;
-					cout << "=========УРА!!!========" << endl;
-					cout << "=========УРА!!!========" << endl;
-					cout << "=====Вы Победили!======" << endl;
-					cout << "=========УРА!!!========" << endl;
-					cout << "=========УРА!!!========" << endl;
-					cout << "=========УРА!!!========" << endl;
-					cout << "=========УРА!!!========" << endl;
-					cout << "=========УРА!!!========" << endl;
+					cout << "=========!!!!!!========" << endl;
+					cout << "=========!!!!!!========" << endl;
+					cout << "=========!!!!!!========" << endl;
+					cout << "=========!!!!!!========" << endl;
+					cout << "=========!!!!!!========" << endl;
+					cout << "========YOU WIN!=======" << endl;
+					cout << "=========!!!!!!========" << endl;
+					cout << "=========!!!!!!========" << endl;
+					cout << "=========!!!!!!========" << endl;
+					cout << "=========!!!!!!========" << endl;
+					cout << "=========!!!!!!========" << endl;
 					gameover = true;
 					break;
 				}
@@ -252,7 +252,7 @@ int main()
 			}
 			if (blackCounter == BlackFigure.size())
 			{
-				cout << "======Вы проиграли=====" << endl;
+				cout << "======you lose!=======" << endl;
 				gameover = true;
 				break;
 			}
@@ -265,7 +265,7 @@ int main()
 			delete d;
 		}
 		BlackFigure.clear();
-		cout << "Cыграем еще?=) y/n";
+		cout << "once more? y/n";
 		choice = _getche(); cout << endl;
 	} while (choice != 'n');
 	
